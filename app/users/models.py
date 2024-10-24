@@ -1,26 +1,37 @@
-from sqlalchemy.orm import Mapped
-
-from app.database import Base, int_pk, str_uniq, email
+from sqlalchemy import String, Integer
+from sqlalchemy.orm import Mapped, mapped_column
+from app.database import Base
 
 
 class User(Base):
-    id: Mapped[int_pk]
-    phone_number: Mapped[str_uniq]
-    first_name: Mapped[str]
-    last_name: Mapped[str]
-    email: Mapped[email]
-    password: Mapped[str]
+    __tablename__ = 'users'
+
+    id: Mapped[int] = mapped_column(
+        Integer,
+        primary_key=True,
+        autoincrement=True,
+    )
+    first_name: Mapped[str] = mapped_column(
+        String,
+        nullable=False,
+    )
+    last_name: Mapped[str] = mapped_column(
+        String,
+        nullable=False,
+    )
+    phone_number: Mapped[str]  = mapped_column(
+        String,
+        nullable=False,
+        unique=True,
+    )
+    email: Mapped[str] = mapped_column(
+        String,
+        nullable=False,
+        unique=True,
+    )
+    hashed_password: Mapped[str] = mapped_column(
+        String,
+        nullable=False
+    )
 
     extend_existing = True
-
-    def __repr__(self):
-        return f"{self.__class__.__name__}(id={self.id})"
-
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "phone_number": self.phone_number,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
-            "email": self.email
-        }

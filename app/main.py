@@ -26,12 +26,18 @@ async def root():
 
 
 @app.exception_handler(TokenExpiredException)
-async def token_expired_exception_handler(request: Request, exc: HTTPException):
+async def token_expired_exception_handler(
+        request: Request,
+        exc: HTTPException
+        ):
     return RedirectResponse(url="/auth")
 
 
 @app.exception_handler(TokenNoFoundException)
-async def token_no_found_exception_handler(request: Request, exc: HTTPException):
+async def token_no_found_exception_handler(
+        request: Request,
+        exc: HTTPException
+        ):
     return RedirectResponse(url="/auth")
 
 

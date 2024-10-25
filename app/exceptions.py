@@ -9,7 +9,7 @@ class TokenExpiredException(HTTPException):
     def __init__(self):
         super().__init__(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail='Токен истек'
+            detail='Токен истек!'
         )
 
 
@@ -21,7 +21,7 @@ class TokenNoFoundException(HTTPException):
     def __init__(self):
         super().__init__(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail='Токен не найден'
+            detail='Токен не найден!'
         )
 
 
@@ -34,7 +34,7 @@ class UserAlreadyExistsException(HTTPException):
     def __init__(self):
         super().__init__(
             status_code=status.HTTP_409_CONFLICT,
-            detail='Пользователь уже существует'
+            detail='Пользователь уже существует!'
         )
 
 
@@ -58,7 +58,7 @@ class IncorrectEmailOrPasswordException(HTTPException):
     def __init__(self):
         super().__init__(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail='Неверная почта или пароль'
+            detail='Неверный номер телефона или пароль'
         )
 
 
@@ -83,7 +83,7 @@ class NoUserIdException(HTTPException):
     def __init__(self):
         super().__init__(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail='Не найден ID пользователя'
+            detail='Не найден ID пользователя!'
         )
 
 

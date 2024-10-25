@@ -19,7 +19,7 @@ router = APIRouter(prefix='/auth', tags=['Auth'])
 
 @router.post("/register/")
 async def register_user(user_data: SUserRegister) -> dict:
-    user = await UsersDAO.find_one_or_none(email=user_data.email)
+    user = await UsersDAO.find_one_or_none(phone_number=user_data.phone_number)
     if user:
         raise UserAlreadyExistsException
 
@@ -27,9 +27,11 @@ async def register_user(user_data: SUserRegister) -> dict:
         raise PasswordMismatchException
     hashed_password = get_password_hash(user_data.password)
     await UsersDAO.add(
-        name=user_data.name,
+        first_name=user_data.first_name,
+        last_name=user_data.last_name,
+        hashed_password=hashed_password,
         email=user_data.email,
-        hashed_password=hashed_password
+        phone_number=user_data.phone_number,
     )
 
     return {'message': 'Вы успешно зарегистрированы!'}
@@ -38,9 +40,9 @@ async def register_user(user_data: SUserRegister) -> dict:
 @router.post("/login/")
 async def auth_user(response: Response, user_data: SUserAuth):
     check = await authenticate_user(
-        email=user_data.email,
+        phone=user_data.phone_number,
         password=user_data.password,
-        )
+    )
     if check is None:
         raise IncorrectEmailOrPasswordException
     access_token = create_access_token({"sub": str(check.id)})

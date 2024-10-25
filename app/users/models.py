@@ -19,7 +19,7 @@ class User(Base):
         String,
         nullable=False,
     )
-    phone_number: Mapped[str]  = mapped_column(
+    phone_number: Mapped[str] = mapped_column(
         String,
         nullable=False,
         unique=True,
